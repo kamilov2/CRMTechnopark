@@ -13,5 +13,5 @@ urlpatterns = [
     path('products/', ProductAPIView.as_view(), name='product-list'),
     path('login/', Login.as_view(), name='login'),
     path('logout/', Logout.as_view(), name='logout'),
-    path('static/' , ProductSalesReport.as_view() , name="static")
+    path('sales_product_static/' , ProductSalesReport.as_view() , name="sales_product_static"),
 ]
