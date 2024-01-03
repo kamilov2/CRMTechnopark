@@ -6,6 +6,9 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.db import transaction
 from django.contrib.auth import login, logout, authenticate
+from django.utils.dateparse import parse_date
+from django.db.models import Sum
+from datetime import timedelta
 from .models import *
 from .serializers import *
 
@@ -72,8 +75,8 @@ class DragAndDropAPIView(APIView):
         return DragAndDrop.objects.filter(special_key=f"{current_key}").prefetch_related('clients')
 
 class PayProductAPIView(APIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAdminUser]
+    # authentication_classes = [TokenAuthentication]
+    # permission_classes = [IsAdminUser]
 
     def get(self, request):
         try:
@@ -158,19 +161,25 @@ class Logout(APIView):
 
 
 
-# class SalesStatisticsAPIView(APIView):
-#     def get(self, request):
-#         start_date = request.data.get('start_date')
-#         end_date = request.data.get('end_date')
+class ProductSalesReport(APIView):
+    def post(self, request):
+        start_date = request.data.get('start_date')
+        end_date = request.data.get('end_date')
 
-#         try:
-#             start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
-#             end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
-#         except ValueError:
-#             return Response({'error': 'Invalid date format'}, status=status.HTTP_400_BAD_REQUEST)
+        if not start_date or not end_date:
+            return Response({"error": "Error: Start date or end date is missing."}, status=status.HTTP_400_BAD_REQUEST)
 
-#         total_quantity = Sales.objects.filter(
-#             sale_date__range=(start_date, end_date)
-#         ).aggregate(total_quantity=Sum('quantity_sold'))['total_quantity'] or 0
+        try:
+            start_date = parse_date(start_date)
+            end_date = parse_date(end_date)
+        except ValueError:
+            return Response({"error": "Error: Date format is not recognized. Please send the date with the format YYYY-MM-DD."}, status=status.HTTP_400_BAD_REQUEST)
 
-#         return Response({'total_quantity_sold': total_quantity}, status=status.HTTP_200_OK)
+        end_date = end_date + timedelta(days=1)
+
+        product_sales = Sales.objects.filter(
+            sale_date__range=[start_date, end_date]
+        ).values('product__name').annotate(total_quantity_sold=Sum('quantity_sold'))
+
+        response_data = [{"product_name": sale['product__name'], "total_quantity_sold": sale['total_quantity_sold']} for sale in product_sales]
+        return Response(response_data)

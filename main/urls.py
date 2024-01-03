@@ -1,5 +1,8 @@
 from django.urls import path
-from .views import ClientAPIView, DragAndDropAPIView, PayProductAPIView, ProductAPIView, Login, Logout
+from .views import (ClientAPIView, DragAndDropAPIView,
+                     PayProductAPIView, ProductAPIView,
+                       Login, Logout,
+                         ProductSalesReport)
 
 app_name="main"
 
@@ -10,4 +13,5 @@ urlpatterns = [
     path('products/', ProductAPIView.as_view(), name='product-list'),
     path('login/', Login.as_view(), name='login'),
     path('logout/', Logout.as_view(), name='logout'),
+    path('static/' , ProductSalesReport.as_view() , name="static")
 ]
