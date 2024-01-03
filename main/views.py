@@ -13,8 +13,8 @@ from .serializers import *
 
    
 class ClientAPIView(APIView):
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAdminUser]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAdminUser]
 
     def get(self, request):
         queryset = Client.objects.all()
@@ -35,8 +35,8 @@ class ClientAPIView(APIView):
         return Response(client_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class DragAndDropAPIView(APIView):
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAdminUser]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAdminUser]
 
     def get(self, request):
         queryset = self.get_data()
