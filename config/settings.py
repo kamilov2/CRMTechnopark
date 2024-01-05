@@ -54,9 +54,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'main.middleware.UniqueDeviceMiddleware',
-    'main.middleware.BlockOtherDevicesMiddleware',
+    'django.middleware.common.CommonMiddleware',  
 
 ]
 ALLOWED_IP = '192.168.43.21'

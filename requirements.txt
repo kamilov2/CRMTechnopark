@@ -1,0 +1,4 @@
+django
+djangorestframewrok
+djoser
+django-modeltranslation
