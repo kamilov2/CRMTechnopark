@@ -55,8 +55,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'main.middleware.UniqueDeviceMiddleware',
+    'main.middleware.BlockOtherDevicesMiddleware',
 
 ]
+ALLOWED_IP = '192.168.43.21'
 
 ROOT_URLCONF = 'config.urls'
 
