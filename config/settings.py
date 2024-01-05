@@ -89,8 +89,7 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "http://192.168.43.21:8000", 
-    "https://wester-academy-quiz1.vercel.app"
+  
 ]
 CORS_ALLOW_METHODS = [
     'DELETE',
