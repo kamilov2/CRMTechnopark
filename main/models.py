@@ -94,21 +94,10 @@ class PayProduct(models.Model):
         verbose_name_plural = "Pay Products"
 
 
-class PaymentType(models.Model):
-    title = models.CharField(verbose_name="Payment Type", max_length=150)
-    reg_date = models.DateField(auto_now_add=True, verbose_name="Registration Date")
-
-    def __str__(self):
-        return f"{self.title} | Registered on: {self.reg_date}"
-
-    class Meta:
-        verbose_name = "Payment Type"
-        verbose_name_plural = "Payment Types"
 
 
-class Payment(models.Model):
+class Expense(models.Model):
     name = models.CharField(verbose_name="Client Name", max_length=150, help_text="Enter the client's name.")
-    payment_type = models.ForeignKey(PaymentType, verbose_name="Payment Type", on_delete=models.CASCADE, help_text="Select payment type")
     amount = models.DecimalField(max_digits=25, decimal_places=2, verbose_name="Amount", help_text="Enter the payment amount.")
     id_payment = models.CharField(verbose_name="ID Payment", max_length=150, blank=True, unique=True, help_text="Unique ID for the payment")
     reg_date = models.DateField(auto_now_add=True, verbose_name="Registration Date")
@@ -116,7 +105,7 @@ class Payment(models.Model):
     def save(self, *args, **kwargs):
         if not self.id_payment:
             self.id_payment = generate_shtrix()
-        super(Payment, self).save(*args, **kwargs)
+        super(Expense, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.id_payment} | {self.name} | Payment Type: {self.payment_type.title} | Amount: {self.amount} | Registered on: {self.reg_date}"

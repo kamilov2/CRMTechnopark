@@ -38,13 +38,8 @@ class PayProductSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class PaymentTypeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PaymentType
-        fields = '__all__'
 
-
-class PaymentSerializer(serializers.ModelSerializer):
+class ExpenseSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Payment
+        model = Expense
         fields = '__all__'

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Client, DragAndDrop, Product, Sales, PayProduct, PaymentType, Payment
+from .models import Client, DragAndDrop, Product, Sales, PayProduct, Expense
 
 class PayProductAdmin(admin.ModelAdmin):
     list_display = ('id_payment', 'id', 'name', 'product', 'quantity', 'price', 'pay_date')
@@ -24,9 +24,9 @@ class ClientAdmin(admin.ModelAdmin):
     list_display = ('name', 'id', 'surname', 'phone_number', 'reg_date')
     search_fields = ('name', 'surname', 'phone_number')
 
-class PaymentAdmin(admin.ModelAdmin):
-    list_display = ('id_payment', 'id', 'name', 'payment_type', 'amount', 'reg_date')
-    list_filter = ('payment_type', 'reg_date')
+class ExpenseAdmin(admin.ModelAdmin):
+    list_display = ('id_payment', 'id', 'name', 'amount', 'reg_date')
+    list_filter = ('id', 'reg_date')
     search_fields = ('name', 'id_payment')
 
 admin.site.register(Client, ClientAdmin)
@@ -34,5 +34,4 @@ admin.site.register(DragAndDrop, DragAndDropAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Sales, SalesAdmin)
 admin.site.register(PayProduct, PayProductAdmin)
-admin.site.register(PaymentType)
-admin.site.register(Payment, PaymentAdmin)
+admin.site.register(Expense, ExpenseAdmin)
